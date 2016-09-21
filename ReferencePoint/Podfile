@@ -1,0 +1,15 @@
+platform :ios, '8.0'
+
+target ‘ReferencePoint’ do
+  pod 'AFNetworking', '~> 3.0'
+  pod 'JSONModel'
+  pod 'Bolts'
+  pod 'Realm'
+  pod 'Reachability'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  pod 'Firebase/Crash'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Messaging'
+
+end
