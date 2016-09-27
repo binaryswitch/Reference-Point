@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
-@interface ViewController : UIViewController
+@interface LoginViewController : UIViewController
+
+@property (strong,nonatomic) User * currentUser;
 
 
 @end

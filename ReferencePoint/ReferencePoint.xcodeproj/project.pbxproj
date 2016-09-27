@@ -7,14 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65064AAB1D976441000A3BC1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 65064AAA1D976441000A3BC1 /* User.m */; };
 		65404A121D926A1D0033E2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A111D926A1D0033E2DF /* main.m */; };
 		65404A151D926A1D0033E2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A141D926A1D0033E2DF /* AppDelegate.m */; };
-		65404A181D926A1D0033E2DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A171D926A1D0033E2DF /* ViewController.m */; };
+		65404A181D926A1D0033E2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A171D926A1D0033E2DF /* LoginViewController.m */; };
 		65404A1B1D926A1D0033E2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65404A191D926A1D0033E2DF /* Main.storyboard */; };
 		65404A1D1D926A1D0033E2DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65404A1C1D926A1D0033E2DF /* Assets.xcassets */; };
 		65404A201D926A1D0033E2DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65404A1E1D926A1D0033E2DF /* LaunchScreen.storyboard */; };
 		65404A2B1D926A1D0033E2DF /* ReferencePointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A2A1D926A1D0033E2DF /* ReferencePointTests.m */; };
 		65404A361D926A1D0033E2DF /* ReferencePointUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A351D926A1D0033E2DF /* ReferencePointUITests.m */; };
+		656A749B1D989DB60045EA6C /* FirebaseDataPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A749A1D989DB60045EA6C /* FirebaseDataPin.m */; };
+		656A749E1D989FED0045EA6C /* FirebaseUserDataModelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A749D1D989FED0045EA6C /* FirebaseUserDataModelResponse.m */; };
+		656A74A11D98D5720045EA6C /* FirebasePublicDataModelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A74A01D98D5720045EA6C /* FirebasePublicDataModelResponse.m */; };
+		656A74A61D98DF800045EA6C /* FirebasePinDataTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A74A51D98DF800045EA6C /* FirebasePinDataTypes.m */; };
+		656A74A91D98DFA30045EA6C /* FirebaseAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A74A81D98DFA30045EA6C /* FirebaseAppVersion.m */; };
+		6573B06E1D9757A0007F065A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6573B06D1D9757A0007F065A /* GoogleService-Info.plist */; };
+		65B357EE1D9621AF008FF530 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B357ED1D9621AF008FF530 /* MapViewController.m */; };
+		65B357F11D9621BB008FF530 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B357F01D9621BB008FF530 /* SettingsViewController.m */; };
+		65B357F31D96249F008FF530 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B357F21D96249F008FF530 /* MapKit.framework */; };
+		65B357F51D9629C0008FF530 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B357F41D9629C0008FF530 /* CoreLocation.framework */; };
 		6C52643673327F00D9ADB37A /* libPods-ReferencePoint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD6A43DDF29F1A46724206FE /* libPods-ReferencePoint.a */; };
 /* End PBXBuildFile section */
 
@@ -37,12 +48,14 @@
 
 /* Begin PBXFileReference section */
 		3D384F838B61CE2F50424791 /* Pods-ReferencePoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReferencePoint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReferencePoint/Pods-ReferencePoint.debug.xcconfig"; sourceTree = "<group>"; };
+		65064AA91D976441000A3BC1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		65064AAA1D976441000A3BC1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		65404A0D1D926A1D0033E2DF /* ReferencePoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReferencePoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65404A111D926A1D0033E2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65404A131D926A1D0033E2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		65404A141D926A1D0033E2DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		65404A161D926A1D0033E2DF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		65404A171D926A1D0033E2DF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		65404A161D926A1D0033E2DF /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		65404A171D926A1D0033E2DF /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		65404A1A1D926A1D0033E2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65404A1C1D926A1D0033E2DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65404A1F1D926A1D0033E2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +66,23 @@
 		65404A311D926A1D0033E2DF /* ReferencePointUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReferencePointUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65404A351D926A1D0033E2DF /* ReferencePointUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReferencePointUITests.m; sourceTree = "<group>"; };
 		65404A371D926A1D0033E2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		656A74991D989DB60045EA6C /* FirebaseDataPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseDataPin.h; sourceTree = "<group>"; };
+		656A749A1D989DB60045EA6C /* FirebaseDataPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseDataPin.m; sourceTree = "<group>"; };
+		656A749C1D989FED0045EA6C /* FirebaseUserDataModelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseUserDataModelResponse.h; sourceTree = "<group>"; };
+		656A749D1D989FED0045EA6C /* FirebaseUserDataModelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseUserDataModelResponse.m; sourceTree = "<group>"; };
+		656A749F1D98D5720045EA6C /* FirebasePublicDataModelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebasePublicDataModelResponse.h; sourceTree = "<group>"; };
+		656A74A01D98D5720045EA6C /* FirebasePublicDataModelResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebasePublicDataModelResponse.m; sourceTree = "<group>"; };
+		656A74A41D98DF800045EA6C /* FirebasePinDataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebasePinDataTypes.h; sourceTree = "<group>"; };
+		656A74A51D98DF800045EA6C /* FirebasePinDataTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebasePinDataTypes.m; sourceTree = "<group>"; };
+		656A74A71D98DFA30045EA6C /* FirebaseAppVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseAppVersion.h; sourceTree = "<group>"; };
+		656A74A81D98DFA30045EA6C /* FirebaseAppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseAppVersion.m; sourceTree = "<group>"; };
+		6573B06D1D9757A0007F065A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		65B357EC1D9621AF008FF530 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		65B357ED1D9621AF008FF530 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		65B357EF1D9621BB008FF530 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		65B357F01D9621BB008FF530 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		65B357F21D96249F008FF530 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		65B357F41D9629C0008FF530 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6DAE4BCCC58A03A04DC7AE76 /* Pods-ReferencePoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReferencePoint.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReferencePoint/Pods-ReferencePoint.release.xcconfig"; sourceTree = "<group>"; };
 		AD6A43DDF29F1A46724206FE /* libPods-ReferencePoint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReferencePoint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -62,6 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65B357F51D9629C0008FF530 /* CoreLocation.framework in Frameworks */,
+				65B357F31D96249F008FF530 /* MapKit.framework in Frameworks */,
 				6C52643673327F00D9ADB37A /* libPods-ReferencePoint.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +124,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		65064AA81D9763EC000A3BC1 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				65064AA91D976441000A3BC1 /* User.h */,
+				65064AAA1D976441000A3BC1 /* User.m */,
+			);
+			name = Realm;
+			sourceTree = "<group>";
+		};
 		65404A041D926A1D0033E2DF = {
 			isa = PBXGroup;
 			children = (
@@ -117,14 +158,20 @@
 		65404A0F1D926A1D0033E2DF /* ReferencePoint */ = {
 			isa = PBXGroup;
 			children = (
+				656A74911D9896B70045EA6C /* Models */,
 				65404A131D926A1D0033E2DF /* AppDelegate.h */,
 				65404A141D926A1D0033E2DF /* AppDelegate.m */,
-				65404A161D926A1D0033E2DF /* ViewController.h */,
-				65404A171D926A1D0033E2DF /* ViewController.m */,
+				65404A161D926A1D0033E2DF /* LoginViewController.h */,
+				65404A171D926A1D0033E2DF /* LoginViewController.m */,
+				65B357EC1D9621AF008FF530 /* MapViewController.h */,
+				65B357ED1D9621AF008FF530 /* MapViewController.m */,
+				65B357EF1D9621BB008FF530 /* SettingsViewController.h */,
+				65B357F01D9621BB008FF530 /* SettingsViewController.m */,
 				65404A191D926A1D0033E2DF /* Main.storyboard */,
 				65404A1C1D926A1D0033E2DF /* Assets.xcassets */,
 				65404A1E1D926A1D0033E2DF /* LaunchScreen.storyboard */,
 				65404A211D926A1D0033E2DF /* Info.plist */,
+				6573B06D1D9757A0007F065A /* GoogleService-Info.plist */,
 				65404A101D926A1D0033E2DF /* Supporting Files */,
 			);
 			path = ReferencePoint;
@@ -156,9 +203,53 @@
 			path = ReferencePointUITests;
 			sourceTree = "<group>";
 		};
+		656A74911D9896B70045EA6C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				656A74921D9896C30045EA6C /* JSON */,
+				65064AA81D9763EC000A3BC1 /* Realm */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		656A74921D9896C30045EA6C /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				656A74A31D98D5950045EA6C /* Public */,
+				656A74A21D98D58B0045EA6C /* Private */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		656A74A21D98D58B0045EA6C /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				656A74991D989DB60045EA6C /* FirebaseDataPin.h */,
+				656A749A1D989DB60045EA6C /* FirebaseDataPin.m */,
+				656A749C1D989FED0045EA6C /* FirebaseUserDataModelResponse.h */,
+				656A749D1D989FED0045EA6C /* FirebaseUserDataModelResponse.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		656A74A31D98D5950045EA6C /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				656A749F1D98D5720045EA6C /* FirebasePublicDataModelResponse.h */,
+				656A74A01D98D5720045EA6C /* FirebasePublicDataModelResponse.m */,
+				656A74A41D98DF800045EA6C /* FirebasePinDataTypes.h */,
+				656A74A51D98DF800045EA6C /* FirebasePinDataTypes.m */,
+				656A74A71D98DFA30045EA6C /* FirebaseAppVersion.h */,
+				656A74A81D98DFA30045EA6C /* FirebaseAppVersion.m */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
 		DDDDC85C14BCA0FD82576843 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65B357F41D9629C0008FF530 /* CoreLocation.framework */,
+				65B357F21D96249F008FF530 /* MapKit.framework */,
 				AD6A43DDF29F1A46724206FE /* libPods-ReferencePoint.a */,
 			);
 			name = Frameworks;
@@ -271,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65404A201D926A1D0033E2DF /* LaunchScreen.storyboard in Resources */,
+				6573B06E1D9757A0007F065A /* GoogleService-Info.plist in Resources */,
 				65404A1D1D926A1D0033E2DF /* Assets.xcassets in Resources */,
 				65404A1B1D926A1D0033E2DF /* Main.storyboard in Resources */,
 			);
@@ -345,9 +437,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65404A181D926A1D0033E2DF /* ViewController.m in Sources */,
+				65404A181D926A1D0033E2DF /* LoginViewController.m in Sources */,
 				65404A151D926A1D0033E2DF /* AppDelegate.m in Sources */,
+				656A74A11D98D5720045EA6C /* FirebasePublicDataModelResponse.m in Sources */,
+				65064AAB1D976441000A3BC1 /* User.m in Sources */,
+				656A749B1D989DB60045EA6C /* FirebaseDataPin.m in Sources */,
+				65B357F11D9621BB008FF530 /* SettingsViewController.m in Sources */,
+				656A74A61D98DF800045EA6C /* FirebasePinDataTypes.m in Sources */,
+				656A749E1D989FED0045EA6C /* FirebaseUserDataModelResponse.m in Sources */,
 				65404A121D926A1D0033E2DF /* main.m in Sources */,
+				65B357EE1D9621AF008FF530 /* MapViewController.m in Sources */,
+				656A74A91D98DFA30045EA6C /* FirebaseAppVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,8 +588,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D384F838B61CE2F50424791 /* Pods-ReferencePoint.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = ReferencePoint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.binaryswitch.ReferencePoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,8 +601,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6DAE4BCCC58A03A04DC7AE76 /* Pods-ReferencePoint.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = ReferencePoint/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.binaryswitch.ReferencePoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
