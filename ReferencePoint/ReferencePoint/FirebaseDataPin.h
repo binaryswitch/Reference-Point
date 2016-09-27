@@ -11,7 +11,10 @@
 @interface FirebaseDataPin : JSONModel
 
 @property (nonatomic) NSString * firebaseId;
+
 @property (nonatomic) NSNumber * latitude;
 @property (nonatomic) NSNumber * longitude;
+
+@property (nonatomic) NSString * desc;
 
 @end

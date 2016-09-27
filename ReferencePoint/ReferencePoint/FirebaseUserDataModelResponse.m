@@ -31,11 +31,13 @@
                 
                 double lat = ((NSString *)[pinData objectForKey:@"lat"]).doubleValue;
                 double lon = ((NSString *)[pinData objectForKey:@"lon"]).doubleValue;
+                NSString * description = ((NSString *)[pinData objectForKey:@"description"]);
                 
                 pin.firebaseId =[responseKeys objectAtIndex:j];
                 pin.latitude = [NSNumber numberWithDouble:lat];
                 pin.longitude = [NSNumber numberWithDouble:lon];
-
+                pin.desc = description;
+                
                 [self.castedPins addObject:pin];
             }
         }

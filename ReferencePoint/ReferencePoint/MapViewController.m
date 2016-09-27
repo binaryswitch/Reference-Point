@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (strong, nonatomic) UITextField *addAndEditTextField;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (strong, nonatomic) NSString * lastSelectedPoint;
 
 @property (nonatomic) BOOL keyboardIsUp;
 
@@ -53,7 +54,6 @@
     self.mapView.userTrackingMode = MKUserTrackingModeFollow;
     self.mapView.frame = self.view.frame;
     
-    
     self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height,  self.view.frame.size.width, 100)];
     self.bottomView.backgroundColor = [UIColor clearColor];
     
@@ -62,9 +62,11 @@
     self.addAndEditTextField.text = @"pin";
     [self.bottomView addSubview:self.addAndEditTextField];
 
-    UILabel * typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 60, 200, 20)];
-    typeLabel.text = @"Company";
-    [self.bottomView addSubview:typeLabel];
+    UIButton * typeSwitchButton = [[UIButton alloc] initWithFrame:CGRectMake(25, 60, 200, 20)];
+    [typeSwitchButton setTitle:@"No Type" forState:UIControlStateNormal];
+    [typeSwitchButton setTitleColor: [UIColor blackColor] forState:UIControlStateNormal];
+    typeSwitchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [self.bottomView addSubview:typeSwitchButton];
 
 
     [self.view addSubview:self.bottomView];
@@ -86,7 +88,7 @@
     [self.mapView addGestureRecognizer:longTapListener];
     
     UITapGestureRecognizer * tapListener = [[UITapGestureRecognizer alloc] initWithTarget:self action: @selector(didTapMap:)];
-    
+    tapListener.delegate = self;
     [self.mapView addGestureRecognizer:tapListener];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -119,7 +121,7 @@
             }
             
             mkpoint.coordinate = CLLocationCoordinate2DMake(pin.latitude.doubleValue, pin.longitude.doubleValue);
-            mkpoint.title= @"pin";
+            mkpoint.title= pin.desc;
             mkpoint.subtitle = pin.firebaseId;
             
             [self.mapView addAnnotation:mkpoint];
@@ -140,6 +142,8 @@
     } withCancelBlock:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
+    
+    [self.addAndEditTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     
 }
@@ -166,11 +170,17 @@
 }
 
 - (void)didTapMap:(UIGestureRecognizer *)recognizer{
-    if (recognizer.state != UIGestureRecognizerStateEnded) {
+    if (recognizer.state != UIGestureRecognizerStateEnded)
+    {
         return;
     }
     
-    [self.addAndEditTextField resignFirstResponder];
+  //  NSLog(@"tap");
+  //  [self.addAndEditTextField resignFirstResponder];
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return YES;
 }
 
 - (void)didLongTapMap:(UIGestureRecognizer *)recognizer
@@ -179,73 +189,59 @@
         return;
     }
     
-    BOOL otherPinsInArea = false;
-    
     CGPoint point = [recognizer locationInView:self.mapView];
     CLLocationCoordinate2D tapPoint = [self.mapView convertPoint:point toCoordinateFromView:self.view];
     
     NSLog(@"%f %f",tapPoint.latitude, tapPoint.longitude );
 
+    [self.addAndEditTextField becomeFirstResponder];
     
-    for (int i = 0; i < self.mapView.annotations.count; i++){
-        //NSLog(@"annotation check");
-
-        id<MKAnnotation> pin = [self.mapView.annotations objectAtIndex:i];
-        CLLocationCoordinate2D point = pin.coordinate;
-
-       // NSLog(@"%f %f",point.latitude, point.longitude );
-
-        
-        double latDiff = tapPoint.latitude -  point.latitude;
-        double lonDiff = tapPoint.longitude - point.longitude;
-        
-        if (fabs(latDiff) < 0.00005 && fabs(lonDiff) < 0.00005){
-            
-           // NSLog(@"%f %f",fabs(latDiff), fabs(lonDiff));
-
-            otherPinsInArea = true;
-            NSLog(@"hit");
-        }
-    }
+    MKPointAnnotation *mkpoint = [[MKPointAnnotation alloc] init];
     
-    if (otherPinsInArea == false){
-        [self.addAndEditTextField becomeFirstResponder];
-        self.addAndEditTextField.text = @"pin";
-        
-        MKPointAnnotation *mkpoint = [[MKPointAnnotation alloc] init];
-        
-        mkpoint.coordinate = tapPoint;
-        mkpoint.title= @"pin";
-        mkpoint.subtitle = @"";
-        
-        [self.mapView addAnnotation:mkpoint];
-        
+    mkpoint.coordinate = tapPoint;
+    mkpoint.title= @"pin";
+    mkpoint.subtitle = @"";
     
-        MKMapRect zoomRect = MKMapRectNull;
-        MKMapPoint annotationPoint = MKMapPointForCoordinate(mkpoint.coordinate);
-        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.4, 0.4);
-        
-        zoomRect = pointRect;
-        
-        FIRDatabaseReference *newFieldRef = [[self getPrivateUserRouteReference] child:@"pins"].childByAutoId;
+    [self.mapView addAnnotation:mkpoint];
     
-        NSNumber * lat = [NSNumber numberWithDouble:mkpoint.coordinate.latitude];
-        NSNumber * lon = [NSNumber numberWithDouble:mkpoint.coordinate.longitude];
-        NSNumber * creationEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000 ];
-        
-        [newFieldRef setValue:@{@"lat":lat,@"lon":lon, @"timeAtCreation": creationEpoch, @"typeId" : @(0)}];
-    }
+
+    MKMapRect zoomRect = MKMapRectNull;
+    MKMapPoint annotationPoint = MKMapPointForCoordinate(mkpoint.coordinate);
+    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.4, 0.4);
+    
+    zoomRect = pointRect;
+    
+    FIRDatabaseReference *newFieldRef = [[self getPrivateUserRouteReference] child:@"pins"].childByAutoId;
+
+    NSNumber * lat = [NSNumber numberWithDouble:mkpoint.coordinate.latitude];
+    NSNumber * lon = [NSNumber numberWithDouble:mkpoint.coordinate.longitude];
+    NSNumber * creationEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000 ];
+    
+    [newFieldRef setValue:@{@"lat":lat,@"lon":lon, @"timeAtCreation": creationEpoch, @"description": self.addAndEditTextField.text, @"typeId" : @(0)}];
+    
 }
+
+#pragma mark MKMapView delegates
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
     
+    MKPointAnnotation * annotation = view.annotation;
+    
+    if([annotation isKindOfClass: [MKUserLocation class]]){
+        return;
+    }
+    self.lastSelectedPoint = view.annotation.subtitle;
+    self.addAndEditTextField.text = annotation.title;
+
     if (!self.keyboardIsUp){
         [self.addAndEditTextField becomeFirstResponder];
  
     }
 }
 
+
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+    NSLog(@"select");
 
 }
 
@@ -335,6 +331,23 @@
     
     return YES;
 }
+
+- (void) textFieldDidChange: (UITextField *) textfield{
+    if (textfield == self.addAndEditTextField){
+        
+        NSString * newDescription = self.addAndEditTextField.text;
+        
+        if (newDescription == nil){
+            newDescription = @"";
+        }
+        
+        FIRDatabaseReference *descriptionRef = [[[[self getPrivateUserRouteReference] child:@"pins"] child:self.lastSelectedPoint] child: @"description"];
+        [descriptionRef setValue:newDescription];
+        
+
+    }
+}
+
 
 - (void)didReceiveMemoryWarning
 {
