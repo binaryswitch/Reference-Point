@@ -200,7 +200,7 @@
     
     mkpoint.coordinate = tapPoint;
     mkpoint.title= @"pin";
-    mkpoint.subtitle = @"";
+
     
     [self.mapView addAnnotation:mkpoint];
     
@@ -211,14 +211,30 @@
     
     zoomRect = pointRect;
     
-    FIRDatabaseReference *newFieldRef = [[self getPrivateUserRouteReference] child:@"pins"].childByAutoId;
+    NSString * newKey = [self randomStringWithLength:14];
 
+    FIRDatabaseReference *newFieldRef = [[[self getPrivateUserRouteReference] child:@"pins"] child:newKey];
+    mkpoint.subtitle = newKey;
+    
     NSNumber * lat = [NSNumber numberWithDouble:mkpoint.coordinate.latitude];
     NSNumber * lon = [NSNumber numberWithDouble:mkpoint.coordinate.longitude];
     NSNumber * creationEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000 ];
     
-    [newFieldRef setValue:@{@"lat":lat,@"lon":lon, @"timeAtCreation": creationEpoch, @"description": self.addAndEditTextField.text, @"typeId" : @(0)}];
+    [newFieldRef setValue:@{@"lat":lat,@"lon":lon, @"timeAtCreation": creationEpoch, @"lastEdited": creationEpoch, @"description": self.addAndEditTextField.text, @"typeId" : @(0)}];
     
+}
+
+NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+-(NSString *) randomStringWithLength: (int) len {
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    
+    return randomString;
 }
 
 #pragma mark MKMapView delegates
@@ -341,9 +357,14 @@
             newDescription = @"";
         }
         
-        FIRDatabaseReference *descriptionRef = [[[[self getPrivateUserRouteReference] child:@"pins"] child:self.lastSelectedPoint] child: @"description"];
+        FIRDatabaseReference * itemRef = [[[self getPrivateUserRouteReference] child:@"pins"] child:self.lastSelectedPoint];
+        FIRDatabaseReference *descriptionRef = [itemRef child: @"description"];
         [descriptionRef setValue:newDescription];
         
+        NSNumber * currentEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000 ];
+
+        FIRDatabaseReference *lastUpdatedRef = [itemRef child: @"lastUpdated"];
+        [lastUpdatedRef setValue:currentEpoch];
 
     }
 }
