@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		65064AAB1D976441000A3BC1 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 65064AAA1D976441000A3BC1 /* User.m */; };
+		65132F501D9CD0400051532A /* ReferenceAnnotationPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65132F4F1D9CD0400051532A /* ReferenceAnnotationPointView.m */; };
+		65132F531D9CDADF0051532A /* ReferencePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 65132F521D9CDADF0051532A /* ReferencePointAnnotation.m */; };
+		65132F561D9CE25F0051532A /* CalloutDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 65132F551D9CE25F0051532A /* CalloutDeleteButton.m */; };
 		65404A121D926A1D0033E2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A111D926A1D0033E2DF /* main.m */; };
 		65404A151D926A1D0033E2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A141D926A1D0033E2DF /* AppDelegate.m */; };
 		65404A181D926A1D0033E2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A171D926A1D0033E2DF /* LoginViewController.m */; };
@@ -50,6 +53,12 @@
 		3D384F838B61CE2F50424791 /* Pods-ReferencePoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReferencePoint.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReferencePoint/Pods-ReferencePoint.debug.xcconfig"; sourceTree = "<group>"; };
 		65064AA91D976441000A3BC1 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		65064AAA1D976441000A3BC1 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		65132F4E1D9CD0400051532A /* ReferenceAnnotationPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferenceAnnotationPointView.h; sourceTree = "<group>"; };
+		65132F4F1D9CD0400051532A /* ReferenceAnnotationPointView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferenceAnnotationPointView.m; sourceTree = "<group>"; };
+		65132F511D9CDADF0051532A /* ReferencePointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferencePointAnnotation.h; sourceTree = "<group>"; };
+		65132F521D9CDADF0051532A /* ReferencePointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferencePointAnnotation.m; sourceTree = "<group>"; };
+		65132F541D9CE25F0051532A /* CalloutDeleteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutDeleteButton.h; sourceTree = "<group>"; };
+		65132F551D9CE25F0051532A /* CalloutDeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutDeleteButton.m; sourceTree = "<group>"; };
 		65404A0D1D926A1D0033E2DF /* ReferencePoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReferencePoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65404A111D926A1D0033E2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65404A131D926A1D0033E2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -133,6 +142,19 @@
 			name = Realm;
 			sourceTree = "<group>";
 		};
+		65132F4D1D9CD0160051532A /* MKMapView */ = {
+			isa = PBXGroup;
+			children = (
+				65132F4E1D9CD0400051532A /* ReferenceAnnotationPointView.h */,
+				65132F4F1D9CD0400051532A /* ReferenceAnnotationPointView.m */,
+				65132F511D9CDADF0051532A /* ReferencePointAnnotation.h */,
+				65132F521D9CDADF0051532A /* ReferencePointAnnotation.m */,
+				65132F541D9CE25F0051532A /* CalloutDeleteButton.h */,
+				65132F551D9CE25F0051532A /* CalloutDeleteButton.m */,
+			);
+			name = MKMapView;
+			sourceTree = "<group>";
+		};
 		65404A041D926A1D0033E2DF = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +180,7 @@
 		65404A0F1D926A1D0033E2DF /* ReferencePoint */ = {
 			isa = PBXGroup;
 			children = (
+				65132F4D1D9CD0160051532A /* MKMapView */,
 				656A74911D9896B70045EA6C /* Models */,
 				65404A131D926A1D0033E2DF /* AppDelegate.h */,
 				65404A141D926A1D0033E2DF /* AppDelegate.m */,
@@ -437,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65132F531D9CDADF0051532A /* ReferencePointAnnotation.m in Sources */,
 				65404A181D926A1D0033E2DF /* LoginViewController.m in Sources */,
 				65404A151D926A1D0033E2DF /* AppDelegate.m in Sources */,
 				656A74A11D98D5720045EA6C /* FirebasePublicDataModelResponse.m in Sources */,
@@ -445,7 +469,9 @@
 				65B357F11D9621BB008FF530 /* SettingsViewController.m in Sources */,
 				656A74A61D98DF800045EA6C /* FirebasePinDataTypes.m in Sources */,
 				656A749E1D989FED0045EA6C /* FirebaseUserDataModelResponse.m in Sources */,
+				65132F561D9CE25F0051532A /* CalloutDeleteButton.m in Sources */,
 				65404A121D926A1D0033E2DF /* main.m in Sources */,
+				65132F501D9CD0400051532A /* ReferenceAnnotationPointView.m in Sources */,
 				65B357EE1D9621AF008FF530 /* MapViewController.m in Sources */,
 				656A74A91D98DFA30045EA6C /* FirebaseAppVersion.m in Sources */,
 			);

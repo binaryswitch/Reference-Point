@@ -11,6 +11,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "FirebaseUserDataModelResponse.h"
 #import "FirebasePublicDataModelResponse.h"
+#import "ReferenceAnnotationPointView.h"
+#import "ReferencePointAnnotation.h"
+#import "CalloutDeleteButton.h"
 
 @import Firebase;
 
@@ -23,10 +26,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (strong, nonatomic) UITextField *addAndEditTextField;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (strong, nonatomic) NSString * lastSelectedPoint;
 
 @property (nonatomic) BOOL keyboardIsUp;
+@property (nonatomic) FIRDatabaseHandle firebaseMainObserverRef;
 
 @end
 
@@ -68,19 +71,15 @@
     typeSwitchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.bottomView addSubview:typeSwitchButton];
 
-
     [self.view addSubview:self.bottomView];
     
     [self.view bringSubviewToFront:self.topView];
     [self.view bringSubviewToFront:self.bottomView];
-    
 
     self.searchTextField.delegate = self;
     self.searchTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.addAndEditTextField.delegate = self;
     self.addAndEditTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-
-    [self.deleteButton addTarget:self action:@selector(didTapDeleteButton) forControlEvents:UIControlEventTouchDown];
     
     UILongPressGestureRecognizer* longTapListener = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongTapMap:)];
     
@@ -97,65 +96,89 @@
     self.keyboardIsUp = NO;
     
     FIRDatabaseReference * userDatabaseRef = [self getPrivateUserRouteReference];
-    
-    [userDatabaseRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
-       
+
+    self.firebaseMainObserverRef = [userDatabaseRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+         NSLog(@"OBSERVE CHANGE");
+        
+        [userDatabaseRef removeObserverWithHandle:self.firebaseMainObserverRef];
+
         FirebaseUserDataModelResponse * firebaseResponse = [[FirebaseUserDataModelResponse alloc] initWithDictionary:snapshot.value error:nil];
         
         for (int i = 0; i < firebaseResponse.castedPins.count; i++){
             FirebaseDataPin * pin = [firebaseResponse.castedPins objectAtIndex:i];
-            NSLog(@"id: %@ lon: %@ lat: %@",pin.firebaseId, pin.latitude, pin.longitude);
-            
-            MKPointAnnotation *mkpoint = nil;
-            
-            for (int p = 0; p < self.mapView.annotations.count; p++){
-                MKPointAnnotation *mkpointAtIndex = (MKPointAnnotation *)[self.mapView.annotations objectAtIndex:p];
-                
-                if ([mkpointAtIndex.subtitle isEqualToString:pin.firebaseId]){
-                    mkpoint = mkpointAtIndex;
-                }
-            }
-            
-            if (mkpoint == nil){
-                mkpoint = [[MKPointAnnotation alloc] init];
-            }
-            
-            mkpoint.coordinate = CLLocationCoordinate2DMake(pin.latitude.doubleValue, pin.longitude.doubleValue);
-            mkpoint.title= pin.desc;
-            mkpoint.subtitle = pin.firebaseId;
-            
-            [self.mapView addAnnotation:mkpoint];
-
+            [self handleNewPin:pin];
         }
-        
-    } withCancelBlock:^(NSError *error) {
+    }
+    withCancelBlock:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
     
-    FIRDatabaseReference * publicDatabaseRef = [self getPublicRouteReference];
+    //Listen for changes (adds) and removals
+    FIRDatabaseReference * userPinDatabaseRef = [[self getPrivateUserRouteReference] child:@"pins"];
     
-    [publicDatabaseRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+    [userPinDatabaseRef observeEventType:FIRDataEventTypeChildChanged withBlock:^(FIRDataSnapshot *snapshot) {
+        NSLog(@"Child changed %@", snapshot.value);
+        NSError * err;
+        FirebaseDataPin * pin = [[FirebaseDataPin alloc] initWithDictionary:snapshot.value error:&err];
+        pin.firebaseId = snapshot.key;
+        [self handleNewPin:pin];
+
+    }
+     withCancelBlock:^(NSError *error) {
+         NSLog(@"%@", error.description);
+     }];
+    
+    [userPinDatabaseRef observeEventType:FIRDataEventTypeChildRemoved withBlock:^(FIRDataSnapshot *snapshot) {
+        NSLog(@"Child removed %@", snapshot.value);
+        FirebaseDataPin * pin = [[FirebaseDataPin alloc] initWithDictionary:snapshot.value error:nil];
+        pin.firebaseId = snapshot.key;
+        [self deletePinIfExists: pin];
         
-        FirebasePublicDataModelResponse * firebaseResponse = [[FirebasePublicDataModelResponse alloc] initWithDictionary:snapshot.value error:nil];
-        
-        
-    } withCancelBlock:^(NSError *error) {
-        NSLog(@"%@", error.description);
-    }];
+    }
+     withCancelBlock:^(NSError *error) {
+         NSLog(@"%@", error.description);
+     }];
+
     
     [self.addAndEditTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
-    
 }
 
-- (void)didTapDeleteButton{
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    
-    FIRDatabaseReference * userPinsReference = [[self getPrivateUserRouteReference] child:@"pins"];
-    [userPinsReference setValue:nil];
+- (void) handleNewPin: (FirebaseDataPin *) pin {
 
+    MKPointAnnotation *mkpoint = nil;
+    
+    //check if pin already exists on map
+    for (int p = 0; p < self.mapView.annotations.count; p++){
+        MKPointAnnotation *mkpointAtIndex = (MKPointAnnotation *)[self.mapView.annotations objectAtIndex:p];
+        
+        if ([mkpointAtIndex.subtitle isEqualToString:pin.firebaseId]){
+            mkpoint = mkpointAtIndex;
+        }
+    }
+    
+    if (mkpoint == nil){
+        mkpoint = [[ReferencePointAnnotation alloc] initWithFirebasePinData:pin];
+    }
+    
+    mkpoint.coordinate = CLLocationCoordinate2DMake(pin.latitude.doubleValue, pin.longitude.doubleValue);
+    mkpoint.title= pin.desc;
+    
+    mkpoint.subtitle = pin.firebaseId;
+    
+    [self.mapView addAnnotation:mkpoint];
 }
 
+- (void) deletePinIfExists: (FirebaseDataPin *) pin {
+    
+    for (int p = 0; p < self.mapView.annotations.count; p++){
+        MKPointAnnotation *mkpointAtIndex = (MKPointAnnotation *)[self.mapView.annotations objectAtIndex:p];
+        
+        if ([mkpointAtIndex.subtitle isEqualToString:pin.firebaseId]){
+            [self.mapView removeAnnotation:mkpointAtIndex];
+        }
+    }
+}
 
 - (FIRDatabaseReference *) getPublicRouteReference {
     FIRDatabaseReference *rootRef= [[FIRDatabase database] reference];
@@ -170,13 +193,10 @@
 }
 
 - (void)didTapMap:(UIGestureRecognizer *)recognizer{
-    if (recognizer.state != UIGestureRecognizerStateEnded)
-    {
+    
+    if (recognizer.state != UIGestureRecognizerStateEnded){
         return;
     }
-    
-  //  NSLog(@"tap");
-  //  [self.addAndEditTextField resignFirstResponder];
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
@@ -196,45 +216,33 @@
 
     [self.addAndEditTextField becomeFirstResponder];
     
-    MKPointAnnotation *mkpoint = [[MKPointAnnotation alloc] init];
+    NSNumber * lat = [NSNumber numberWithDouble:tapPoint.latitude];
+    NSNumber * lon = [NSNumber numberWithDouble:tapPoint.longitude];
+    NSNumber * creationEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000];
+    NSString * newKey = [FirebaseDataPin randomKeyWithLength:14];
+
+    FirebaseDataPin * dataPin = [[FirebaseDataPin alloc] init];
+    dataPin.latitude = lat;
+    dataPin.longitude = lon;
+    dataPin.firebaseId = newKey;
+    
+    ReferencePointAnnotation *mkpoint = [[ReferencePointAnnotation alloc] initWithFirebasePinData:dataPin];
     
     mkpoint.coordinate = tapPoint;
     mkpoint.title= @"pin";
 
-    
     [self.mapView addAnnotation:mkpoint];
     
-
     MKMapRect zoomRect = MKMapRectNull;
     MKMapPoint annotationPoint = MKMapPointForCoordinate(mkpoint.coordinate);
     MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.4, 0.4);
     
     zoomRect = pointRect;
     
-    NSString * newKey = [self randomStringWithLength:14];
-
     FIRDatabaseReference *newFieldRef = [[[self getPrivateUserRouteReference] child:@"pins"] child:newKey];
     mkpoint.subtitle = newKey;
     
-    NSNumber * lat = [NSNumber numberWithDouble:mkpoint.coordinate.latitude];
-    NSNumber * lon = [NSNumber numberWithDouble:mkpoint.coordinate.longitude];
-    NSNumber * creationEpoch = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] * 1000 ];
-    
     [newFieldRef setValue:@{@"lat":lat,@"lon":lon, @"timeAtCreation": creationEpoch, @"lastEdited": creationEpoch, @"description": self.addAndEditTextField.text, @"typeId" : @(0)}];
-    
-}
-
-NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
--(NSString *) randomStringWithLength: (int) len {
-    
-    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
-    
-    for (int i=0; i<len; i++) {
-        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
-    }
-    
-    return randomString;
 }
 
 #pragma mark MKMapView delegates
@@ -246,31 +254,55 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
     if([annotation isKindOfClass: [MKUserLocation class]]){
         return;
     }
+    
     self.lastSelectedPoint = view.annotation.subtitle;
     self.addAndEditTextField.text = annotation.title;
 
+
     if (!self.keyboardIsUp){
         [self.addAndEditTextField becomeFirstResponder];
- 
     }
 }
-
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
     NSLog(@"select");
 
 }
 
-//- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
-//{
-//    if([annotation isKindOfClass: [MKUserLocation class]])
-//        return nil;
-//    
-//    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"pin"];
-//    
-//    return annView;
-//}
+- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
+{
+    if([annotation isKindOfClass: [MKUserLocation class]]){
 
+        return nil;
+    }
+
+    MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pinView"];
+    pinView.pinColor = MKPinAnnotationColorRed;
+    pinView.canShowCallout = YES;
+    
+    if ([annotation isKindOfClass:[ReferencePointAnnotation class]]){
+        
+        ReferencePointAnnotation * castedReference = (ReferencePointAnnotation *)annotation;
+    
+        CalloutDeleteButton *rightButton = [[CalloutDeleteButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        rightButton.firebaseIdReferenced = [castedReference getReferencedFirebaseId];
+        rightButton.pointAnnotationReferenced = castedReference;
+        
+        [rightButton setTitle:@"DEL" forState:UIControlStateNormal];
+        [rightButton setBackgroundColor:[UIColor grayColor]];
+        [rightButton addTarget:self action:@selector(calloutDeleteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        pinView.rightCalloutAccessoryView = rightButton;
+    }
+    
+    return pinView;
+}
+
+- (void) calloutDeleteButtonClicked: (CalloutDeleteButton *) sender {
+    [self.mapView removeAnnotation:sender.pointAnnotationReferenced];
+    FIRDatabaseReference * userPinsReference = [[[self getPrivateUserRouteReference] child:@"pins"] child:sender.firebaseIdReferenced];
+    [userPinsReference setValue:nil];
+}
 
 - (void)keyboardWillShow:(id)keyboardDidShow
 {
@@ -358,6 +390,8 @@ NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345
         }
         
         FIRDatabaseReference * itemRef = [[[self getPrivateUserRouteReference] child:@"pins"] child:self.lastSelectedPoint];
+        
+        
         FIRDatabaseReference *descriptionRef = [itemRef child: @"description"];
         [descriptionRef setValue:newDescription];
         
