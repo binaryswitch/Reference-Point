@@ -31,18 +31,14 @@
 
 - (void) didTapLogoutButton{
     //transition here
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                         bundle:nil];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     [[RLMRealm defaultRealm] beginWriteTransaction];
     [[RLMRealm defaultRealm] deleteAllObjects];
     [[RLMRealm defaultRealm] commitWriteTransaction];
 
     LoginViewController * nextScreen = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    
-    
     [self presentViewController:nextScreen animated:YES completion:nil];
-    
 
 }
 

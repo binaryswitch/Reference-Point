@@ -14,6 +14,8 @@
 #import "ReferenceAnnotationPointView.h"
 #import "ReferencePointAnnotation.h"
 #import "CalloutDeleteButton.h"
+#import "SettingsViewController.h"
+#import "CommonPlace.h"
 
 @import Firebase;
 
@@ -21,15 +23,20 @@
 @property (strong, nonatomic)  MKMapView *mapView;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation* currentLocation;
-@property (weak, nonatomic) IBOutlet UIView *topView;
+@property (strong, nonatomic) UIView *topView;
 @property (strong, nonatomic) UIView * bottomView;
 
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (strong, nonatomic) UITextField *searchTextField;
 @property (strong, nonatomic) UITextField *addAndEditTextField;
+
+@property (strong, nonatomic) UIButton * settingsButton;
+
 @property (strong, nonatomic) NSString * lastSelectedPoint;
 
 @property (nonatomic) BOOL keyboardIsUp;
 @property (nonatomic) FIRDatabaseHandle firebaseMainObserverRef;
+
+@property (strong, nonatomic) SettingsViewController * settingsViewController;
 
 @end
 
@@ -39,8 +46,9 @@
 {
     [super viewDidLoad];
     
-    self.mapView = [[MKMapView alloc] initWithFrame: self.view.frame];
-    [self.view addSubview:self.mapView];
+    self.settingsViewController = [[SettingsViewController alloc] init];
+    
+    self.mapView = [[MKMapView alloc] initWithFrame: self.view.frame inView:self.view];
     
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -48,6 +56,7 @@
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
     }
+    
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     [self.locationManager startUpdatingLocation];
@@ -57,29 +66,36 @@
     self.mapView.userTrackingMode = MKUserTrackingModeFollow;
     self.mapView.frame = self.view.frame;
     
-    self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height,  self.view.frame.size.width, 100)];
+    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 70) inView:self.view ];
+    [self.topView setBackgroundColor:[UIColor lightGrayColor]];
+
+    self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 20, 200, 30) inView:self.topView];
+    self.searchTextField.accessibilityHint = @"hint";
+    self.searchTextField.backgroundColor = [UIColor whiteColor];
+    
+    self.settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.searchTextField.right + 10, 20, 100, 30) inView:self.topView];
+    [self.settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
+    [self.settingsButton addTarget:self action:@selector(didTapSettingsButton) forControlEvents:UIControlEventTouchDown];
+    
+    self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height,  self.view.width, 100) inView:self.view];
     self.bottomView.backgroundColor = [UIColor clearColor];
     
-    self.addAndEditTextField = [[UITextField alloc] initWithFrame:CGRectMake(25, 25, self.bottomView.frame.size.width - 50, 20)];
+    self.addAndEditTextField = [[UITextField alloc] initWithFrame:CGRectMake(25, 25, self.bottomView.width - 50, 20) inView:self.bottomView];
     self.addAndEditTextField.backgroundColor = [UIColor whiteColor];
     self.addAndEditTextField.text = @"pin";
-    [self.bottomView addSubview:self.addAndEditTextField];
-
-    UIButton * typeSwitchButton = [[UIButton alloc] initWithFrame:CGRectMake(25, 60, 200, 20)];
+    self.addAndEditTextField.delegate = self;
+    self.addAndEditTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    self.searchTextField.delegate = self;
+    self.searchTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
+    UIButton * typeSwitchButton = [[UIButton alloc] initWithFrame:CGRectMake(25, 60, 200, 20) inView:self.bottomView];
     [typeSwitchButton setTitle:@"No Type" forState:UIControlStateNormal];
     [typeSwitchButton setTitleColor: [UIColor blackColor] forState:UIControlStateNormal];
     typeSwitchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.bottomView addSubview:typeSwitchButton];
-
-    [self.view addSubview:self.bottomView];
     
     [self.view bringSubviewToFront:self.topView];
     [self.view bringSubviewToFront:self.bottomView];
-
-    self.searchTextField.delegate = self;
-    self.searchTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.addAndEditTextField.delegate = self;
-    self.addAndEditTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     
     UILongPressGestureRecognizer* longTapListener = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongTapMap:)];
     
@@ -154,6 +170,7 @@
         
         if ([mkpointAtIndex.subtitle isEqualToString:pin.firebaseId]){
             mkpoint = mkpointAtIndex;
+            
         }
     }
     
@@ -163,6 +180,21 @@
     
     mkpoint.coordinate = CLLocationCoordinate2DMake(pin.latitude.doubleValue, pin.longitude.doubleValue);
     mkpoint.title= pin.desc;
+    
+    UIView * mkpointView = [self.mapView viewForAnnotation:mkpoint];
+    
+    if (mkpointView != nil && [mkpointView isKindOfClass:[MKPinAnnotationView class]]){
+        
+        MKPinAnnotationView * pinView = (MKPinAnnotationView *) mkpointView;
+        
+        if ([mkpoint.title.lowercaseString containsString:@"rubbish bin"]){
+            pinView.pinColor = MKPinAnnotationColorPurple;
+            
+        }
+        else{
+            pinView.pinColor = MKPinAnnotationColorRed;
+        }
+    }
     
     mkpoint.subtitle = pin.firebaseId;
     
@@ -229,7 +261,7 @@
     ReferencePointAnnotation *mkpoint = [[ReferencePointAnnotation alloc] initWithFirebasePinData:dataPin];
     
     mkpoint.coordinate = tapPoint;
-    mkpoint.title= @"pin";
+    mkpoint.title= self.addAndEditTextField.text;
 
     [self.mapView addAnnotation:mkpoint];
     
@@ -289,6 +321,9 @@
             pinView.pinColor = MKPinAnnotationColorPurple;
 
         }
+        else{
+            pinView.pinColor = MKPinAnnotationColorRed;
+        }
         
         CalloutDeleteButton *rightButton = [[CalloutDeleteButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         rightButton.firebaseIdReferenced = [castedReference getReferencedFirebaseId];
@@ -325,8 +360,7 @@
                          CGRect keyboardRect = [[keyboardDidShow userInfo][UIKeyboardFrameEndUserInfoKey] CGRectValue];
                          keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
                          
-                         CGSize viewSize = self.bottomView.frame.size;
-                         CGRect newRect = CGRectMake(0, (self.view.frame.size.height - keyboardRect.size.height) - viewSize.height, viewSize.width, viewSize.height);
+                         CGRect newRect = CGRectMake(0, (self.view.height - keyboardRect.size.height) - self.bottomView.height, self.bottomView.width, self.bottomView.height);
                          
                          self.bottomView.frame = newRect;
                          
@@ -353,8 +387,7 @@
                      animations:^{
                          
                          
-                         CGSize viewSize = self.bottomView.frame.size;
-                         CGRect newRect = CGRectMake(0, self.view.frame.size.height, viewSize.width, viewSize.height);
+                         CGRect newRect = CGRectMake(0, self.view.height, self.bottomView.width, self.bottomView.height);
                          
                          self.bottomView.frame = newRect;
                          
@@ -397,7 +430,6 @@
         
         FIRDatabaseReference * itemRef = [[[self getPrivateUserRouteReference] child:@"pins"] child:self.lastSelectedPoint];
         
-        
         FIRDatabaseReference *descriptionRef = [itemRef child: @"description"];
         [descriptionRef setValue:newDescription];
         
@@ -409,6 +441,12 @@
     }
 }
 
+
+- (void) didTapSettingsButton {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingsViewController * nextScreen = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:nextScreen animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {

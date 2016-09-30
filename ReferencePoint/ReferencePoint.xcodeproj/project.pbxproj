@@ -19,6 +19,7 @@
 		65404A201D926A1D0033E2DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65404A1E1D926A1D0033E2DF /* LaunchScreen.storyboard */; };
 		65404A2B1D926A1D0033E2DF /* ReferencePointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A2A1D926A1D0033E2DF /* ReferencePointTests.m */; };
 		65404A361D926A1D0033E2DF /* ReferencePointUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65404A351D926A1D0033E2DF /* ReferencePointUITests.m */; };
+		65532AD01D9F16BB00CD6E94 /* UIView+CommonPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 65532ACF1D9F16BB00CD6E94 /* UIView+CommonPlace.m */; };
 		656A749B1D989DB60045EA6C /* FirebaseDataPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A749A1D989DB60045EA6C /* FirebaseDataPin.m */; };
 		656A749E1D989FED0045EA6C /* FirebaseUserDataModelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A749D1D989FED0045EA6C /* FirebaseUserDataModelResponse.m */; };
 		656A74A11D98D5720045EA6C /* FirebasePublicDataModelResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A74A01D98D5720045EA6C /* FirebasePublicDataModelResponse.m */; };
@@ -75,6 +76,8 @@
 		65404A311D926A1D0033E2DF /* ReferencePointUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReferencePointUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65404A351D926A1D0033E2DF /* ReferencePointUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReferencePointUITests.m; sourceTree = "<group>"; };
 		65404A371D926A1D0033E2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65532ACE1D9F16BB00CD6E94 /* UIView+CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CommonPlace.h"; sourceTree = "<group>"; };
+		65532ACF1D9F16BB00CD6E94 /* UIView+CommonPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CommonPlace.m"; sourceTree = "<group>"; };
 		656A74991D989DB60045EA6C /* FirebaseDataPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseDataPin.h; sourceTree = "<group>"; };
 		656A749A1D989DB60045EA6C /* FirebaseDataPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseDataPin.m; sourceTree = "<group>"; };
 		656A749C1D989FED0045EA6C /* FirebaseUserDataModelResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseUserDataModelResponse.h; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 			isa = PBXGroup;
 			children = (
 				65C063841D9E4E54009BB955 /* CommonPlace.h */,
+				65532ACE1D9F16BB00CD6E94 /* UIView+CommonPlace.h */,
+				65532ACF1D9F16BB00CD6E94 /* UIView+CommonPlace.m */,
 			);
 			name = CommonPlace;
 			sourceTree = "<group>";
@@ -471,6 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65132F531D9CDADF0051532A /* ReferencePointAnnotation.m in Sources */,
+				65532AD01D9F16BB00CD6E94 /* UIView+CommonPlace.m in Sources */,
 				65404A181D926A1D0033E2DF /* LoginViewController.m in Sources */,
 				65404A151D926A1D0033E2DF /* AppDelegate.m in Sources */,
 				656A74A11D98D5720045EA6C /* FirebasePublicDataModelResponse.m in Sources */,

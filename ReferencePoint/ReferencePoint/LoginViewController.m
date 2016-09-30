@@ -54,7 +54,6 @@
             
             if (self.currentUser != nil){
                 
-
                 [self attemptLoginWithToken];
             }
         
