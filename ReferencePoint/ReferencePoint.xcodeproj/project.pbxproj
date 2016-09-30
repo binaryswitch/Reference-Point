@@ -29,7 +29,6 @@
 		65B357F11D9621BB008FF530 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B357F01D9621BB008FF530 /* SettingsViewController.m */; };
 		65B357F31D96249F008FF530 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B357F21D96249F008FF530 /* MapKit.framework */; };
 		65B357F51D9629C0008FF530 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B357F41D9629C0008FF530 /* CoreLocation.framework */; };
-		65C063801D9E4C6D009BB955 /* CommonPlace in Resources */ = {isa = PBXBuildFile; fileRef = 65C0637F1D9E4C6D009BB955 /* CommonPlace */; };
 		6C52643673327F00D9ADB37A /* libPods-ReferencePoint.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD6A43DDF29F1A46724206FE /* libPods-ReferencePoint.a */; };
 /* End PBXBuildFile section */
 
@@ -93,7 +92,7 @@
 		65B357F01D9621BB008FF530 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		65B357F21D96249F008FF530 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		65B357F41D9629C0008FF530 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		65C0637F1D9E4C6D009BB955 /* CommonPlace */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CommonPlace; sourceTree = SOURCE_ROOT; };
+		65C063841D9E4E54009BB955 /* CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonPlace.h; path = CommonPlace/CommonPlace.h; sourceTree = SOURCE_ROOT; };
 		6DAE4BCCC58A03A04DC7AE76 /* Pods-ReferencePoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReferencePoint.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReferencePoint/Pods-ReferencePoint.release.xcconfig"; sourceTree = "<group>"; };
 		AD6A43DDF29F1A46724206FE /* libPods-ReferencePoint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReferencePoint.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -182,7 +181,7 @@
 		65404A0F1D926A1D0033E2DF /* ReferencePoint */ = {
 			isa = PBXGroup;
 			children = (
-				65C0637F1D9E4C6D009BB955 /* CommonPlace */,
+				65C063831D9E4E4B009BB955 /* CommonPlace */,
 				65132F4D1D9CD0160051532A /* MKMapView */,
 				656A74911D9896B70045EA6C /* Models */,
 				65404A131D926A1D0033E2DF /* AppDelegate.h */,
@@ -269,6 +268,14 @@
 				656A74A81D98DFA30045EA6C /* FirebaseAppVersion.m */,
 			);
 			name = Public;
+			sourceTree = "<group>";
+		};
+		65C063831D9E4E4B009BB955 /* CommonPlace */ = {
+			isa = PBXGroup;
+			children = (
+				65C063841D9E4E54009BB955 /* CommonPlace.h */,
+			);
+			name = CommonPlace;
 			sourceTree = "<group>";
 		};
 		DDDDC85C14BCA0FD82576843 /* Frameworks */ = {
@@ -388,7 +395,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65404A201D926A1D0033E2DF /* LaunchScreen.storyboard in Resources */,
-				65C063801D9E4C6D009BB955 /* CommonPlace in Resources */,
 				6573B06E1D9757A0007F065A /* GoogleService-Info.plist in Resources */,
 				65404A1D1D926A1D0033E2DF /* Assets.xcassets in Resources */,
 				65404A1B1D926A1D0033E2DF /* Main.storyboard in Resources */,

@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "MapViewController.h"
+#import "CommonPlace.h"
 
 @import Firebase;
 
