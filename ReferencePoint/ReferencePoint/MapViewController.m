@@ -277,6 +277,7 @@
     }
 
     MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pinView"];
+    
     pinView.pinColor = MKPinAnnotationColorRed;
     pinView.canShowCallout = YES;
     
@@ -284,6 +285,11 @@
         
         ReferencePointAnnotation * castedReference = (ReferencePointAnnotation *)annotation;
     
+        if ([castedReference.title.lowercaseString containsString:@"rubbish bin"]){
+            pinView.pinColor = MKPinAnnotationColorPurple;
+
+        }
+        
         CalloutDeleteButton *rightButton = [[CalloutDeleteButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         rightButton.firebaseIdReferenced = [castedReference getReferencedFirebaseId];
         rightButton.pointAnnotationReferenced = castedReference;
