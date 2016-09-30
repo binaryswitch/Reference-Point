@@ -1,0 +1,3 @@
+[submodule "ReferencePoint/CommonPlace"]
+	path = ReferencePoint/CommonPlace
+	url = https://github.com/binaryswitch/CommonPlace
