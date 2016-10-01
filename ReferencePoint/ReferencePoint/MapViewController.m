@@ -15,6 +15,7 @@
 #import "ReferencePointAnnotation.h"
 #import "CalloutDeleteButton.h"
 #import "SettingsViewController.h"
+#import "ARViewController.h"
 #import "CommonPlace.h"
 
 @import Firebase;
@@ -36,7 +37,7 @@
 @property (nonatomic) BOOL keyboardIsUp;
 @property (nonatomic) FIRDatabaseHandle firebaseMainObserverRef;
 
-@property (strong, nonatomic) SettingsViewController * settingsViewController;
+@property (strong, nonatomic) ARViewController * arViewController;
 
 @end
 
@@ -46,7 +47,7 @@
 {
     [super viewDidLoad];
     
-    self.settingsViewController = [[SettingsViewController alloc] init];
+    self.arViewController = [[ARViewController alloc] init];
     
     self.mapView = [[MKMapView alloc] initWithFrame: self.view.frame inView:self.view];
     
@@ -73,14 +74,14 @@
     self.searchTextField.accessibilityHint = @"hint";
     self.searchTextField.backgroundColor = [UIColor whiteColor];
     
-
     self.settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.searchTextField.right + 10, 20, 70, 30) inView:self.topView];
     [self.settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
     [self.settingsButton addTarget:self action:@selector(didTapSettingsButton) forControlEvents:UIControlEventTouchDown];
     
     UIButton * arButton = [[UIButton alloc] initWithFrame:CGRectMake(self.settingsButton.right + 10, 20, 30, 30) inView:self.topView];
     [arButton setTitle:@"3D" forState:UIControlStateNormal];
-    
+    [arButton addTarget:self action:@selector(didTapARButton) forControlEvents:UIControlEventTouchDown];
+
     self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height,  self.view.width, 100) inView:self.view];
     self.bottomView.backgroundColor = [UIColor clearColor];
     
@@ -451,6 +452,11 @@
     SettingsViewController * nextScreen = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
     [self presentViewController:nextScreen animated:YES completion:nil];
 }
+
+- (void) didTapARButton {
+    [self presentViewController:self.arViewController animated:YES completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
