@@ -14,6 +14,7 @@
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton * goButton;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField0;
 @property (weak, nonatomic) IBOutlet UIButton *loginSelectorButton;
@@ -77,6 +78,20 @@
     self.loginModeSelected = NO;
     self.passwordField1.hidden = NO;
 }
+
+- (void) didTapFacebookButton
+{
+    if (self.loginModeSelected)
+    {
+        
+
+    }
+    else{
+
+        
+    }
+}
+
 
 - (void) didTapGoButton{
     

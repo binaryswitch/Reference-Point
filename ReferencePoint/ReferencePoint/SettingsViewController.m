@@ -9,9 +9,11 @@
 #import "SettingsViewController.h"
 #import "LoginViewController.h"
 #import "User.h"
+#import <Firebase/Firebase.h>
 
 @interface SettingsViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UILabel *userIdLabel;
 
 @end
 
@@ -22,6 +24,8 @@
     
     [self.logoutButton addTarget:self action:@selector(didTapLogoutButton) forControlEvents:UIControlEventTouchUpInside];
     // Do any additional setup after loading the view.
+    
+    self.userIdLabel.text = [FIRAuth auth].currentUser.uid;
 }
 
 - (void)didReceiveMemoryWarning {

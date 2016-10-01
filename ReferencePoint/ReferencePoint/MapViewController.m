@@ -73,9 +73,13 @@
     self.searchTextField.accessibilityHint = @"hint";
     self.searchTextField.backgroundColor = [UIColor whiteColor];
     
-    self.settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.searchTextField.right + 10, 20, 100, 30) inView:self.topView];
+
+    self.settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(self.searchTextField.right + 10, 20, 70, 30) inView:self.topView];
     [self.settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
     [self.settingsButton addTarget:self action:@selector(didTapSettingsButton) forControlEvents:UIControlEventTouchDown];
+    
+    UIButton * arButton = [[UIButton alloc] initWithFrame:CGRectMake(self.settingsButton.right + 10, 20, 30, 30) inView:self.topView];
+    [arButton setTitle:@"3D" forState:UIControlStateNormal];
     
     self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height,  self.view.width, 100) inView:self.view];
     self.bottomView.backgroundColor = [UIColor clearColor];

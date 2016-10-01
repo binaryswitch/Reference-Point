@@ -11,5 +11,8 @@ target ‘ReferencePoint’ do
   pod 'Firebase/Crash'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 
 end
