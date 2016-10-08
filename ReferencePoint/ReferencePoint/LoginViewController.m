@@ -39,31 +39,28 @@
     [self.loginSelectorButton addTarget:self action:@selector(didTapLoginSelectorButton) forControlEvents:UIControlEventTouchUpInside];
     [self.registerSelectorButton addTarget:self action:@selector(didTapRegisterSelectorButton) forControlEvents:UIControlEventTouchUpInside];
 
-
     self.passwordField0.secureTextEntry = true;
     self.passwordField1.secureTextEntry = true;
     
     [self didTapLoginSelectorButton];
     
     self.currentUser = [[User allObjects] firstObject];
-    
+
     [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth,
                                                     FIRUser *_Nullable user) {
         if (user != nil) {
             
-            NSLog(@"%@ current user %@",self.currentUser, [[[FIRAuth auth] currentUser] uid] );
+            NSLog(user.refreshToken);
             
-            if (self.currentUser != nil){
-                
+            if (self.isViewLoaded && self.view.window) {
                 [self attemptLoginWithToken];
             }
-        
-        } else {
+        }
+        else {
             NSLog(@"%@ no  current user");
         }
     }];
-
-
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
