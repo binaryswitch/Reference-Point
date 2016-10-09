@@ -162,7 +162,7 @@
 
     
     [self.addAndEditTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    
+   
 }
 
 - (void) handleNewPin: (FirebaseDataPin *) pin {
@@ -219,12 +219,12 @@
 
 - (FIRDatabaseReference *) getPublicRouteReference {
     FIRDatabaseReference *rootRef= [[FIRDatabase database] reference];
-    return [rootRef child:@"public"];
+    return [rootRef child:@"semistatic/public"];
 }
 
 - (FIRDatabaseReference *) getPrivateUserRouteReference {
     FIRDatabaseReference *rootRef= [[FIRDatabase database] reference];
-    FIRDatabaseReference *userRef= [rootRef child:@"private/users"];
+    FIRDatabaseReference *userRef= [rootRef child:@"semistatic/private/users"];
     
     return [userRef child:[FIRAuth auth].currentUser.uid];
 }
