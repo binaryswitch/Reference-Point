@@ -72,7 +72,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qyF-AJ-PX9" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="150" y="257" width="110" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.17779476694685759" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Facebook">
+                                <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -149,18 +149,6 @@
                                     <rect key="frame" x="95" y="24" width="64" height="21"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="UserId:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMc-7W-na1">
-                                <rect key="frame" x="20" y="61" width="56" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="..." textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cox-iq-CAl">
-                                <rect key="frame" x="90" y="48" width="191" height="47"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNI-lV-1IR">
                                 <rect key="frame" x="17" y="7" width="34" height="30"/>
                                 <state key="normal" title="Logout"/>
@@ -184,7 +172,6 @@
                     <navigationItem key="navigationItem" id="N3c-0Y-E3q"/>
                     <connections>
                         <outlet property="logoutButton" destination="nyn-Ep-0dO" id="fAu-Ij-3KJ"/>
-                        <outlet property="userIdLabel" destination="Cox-iq-CAl" id="NQf-Rd-TnF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kPJ-AE-oEe" userLabel="First Responder" sceneMemberID="firstResponder"/>

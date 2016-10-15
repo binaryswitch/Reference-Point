@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 @import Firebase;
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate ()
 
@@ -22,6 +23,13 @@
     
     // Override point for customization after application launch.
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application  openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

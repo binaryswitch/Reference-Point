@@ -9,12 +9,15 @@
 #import "LoginViewController.h"
 #import "MapViewController.h"
 #import "CommonPlace.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @import Firebase;
 
-@interface LoginViewController ()
+@interface LoginViewController () <FBSDKLoginButtonDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton * goButton;
-@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet FBSDKLoginButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField0;
 @property (weak, nonatomic) IBOutlet UIButton *loginSelectorButton;
@@ -41,6 +44,7 @@
 
     self.passwordField0.secureTextEntry = true;
     self.passwordField1.secureTextEntry = true;
+    self.facebookButton.delegate = self;
     
     [self didTapLoginSelectorButton];
     
@@ -50,7 +54,7 @@
                                                     FIRUser *_Nullable user) {
         if (user != nil) {
             
-            NSLog(user.refreshToken);
+           // NSLog(user.refreshToken);
             
             if (self.isViewLoaded && self.view.window) {
                 [self attemptLoginWithToken];
@@ -63,6 +67,29 @@
     
     // Do any additional setup after loading the view, typically from a nib.
 }
+
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
+              error:(NSError *)error {
+    if (error == nil) {
+        FIRAuthCredential *credential = [FIRFacebookAuthProvider credentialWithAccessToken:[FBSDKAccessToken currentAccessToken].tokenString];
+        
+        [[FIRAuth auth] signInWithCredential:credential
+                                  completion:^(FIRUser *user, NSError *error) {
+                                      
+                                      if (user != nil){
+                                          if (self.isViewLoaded && self.view.window) {
+                                              [self attemptLoginWithToken];
+                                          }
+                                      }
+                                      else{
+                                        NSLog(@"%@ no  current user");
+                                      }
+                                  }];
+    } else {
+        NSLog(error.localizedDescription);
+    }
+}
+
 
 - (void) didTapLoginSelectorButton
 {

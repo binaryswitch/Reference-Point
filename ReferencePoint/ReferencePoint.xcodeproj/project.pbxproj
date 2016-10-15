@@ -90,13 +90,13 @@
 		656A74A71D98DFA30045EA6C /* FirebaseAppVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseAppVersion.h; sourceTree = "<group>"; };
 		656A74A81D98DFA30045EA6C /* FirebaseAppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseAppVersion.m; sourceTree = "<group>"; };
 		6573B06D1D9757A0007F065A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		658C92CE1DB1BDB8004B9F92 /* CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlace.h; sourceTree = "<group>"; };
 		65B357EC1D9621AF008FF530 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		65B357ED1D9621AF008FF530 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		65B357EF1D9621BB008FF530 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		65B357F01D9621BB008FF530 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		65B357F21D96249F008FF530 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		65B357F41D9629C0008FF530 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		65C063841D9E4E54009BB955 /* CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonPlace.h; path = CommonPlace/CommonPlace.h; sourceTree = SOURCE_ROOT; };
 		65F431DC1D9F5F7A00C2913B /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARViewController.h; path = ../ARViewController.h; sourceTree = "<group>"; };
 		65F431DD1D9F5F7A00C2913B /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARViewController.m; path = ../ARViewController.m; sourceTree = "<group>"; };
 		6DAE4BCCC58A03A04DC7AE76 /* Pods-ReferencePoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReferencePoint.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReferencePoint/Pods-ReferencePoint.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		65404A0F1D926A1D0033E2DF /* ReferencePoint */ = {
 			isa = PBXGroup;
 			children = (
-				65C063831D9E4E4B009BB955 /* CommonPlace */,
+				65C063831D9E4E4B009BB955 /* Extensions */,
 				65132F4D1D9CD0160051532A /* MKMapView */,
 				656A74911D9896B70045EA6C /* Models */,
 				65404A131D926A1D0033E2DF /* AppDelegate.h */,
@@ -278,14 +278,14 @@
 			name = Public;
 			sourceTree = "<group>";
 		};
-		65C063831D9E4E4B009BB955 /* CommonPlace */ = {
+		65C063831D9E4E4B009BB955 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				65C063841D9E4E54009BB955 /* CommonPlace.h */,
+				658C92CE1DB1BDB8004B9F92 /* CommonPlace.h */,
 				65532ACE1D9F16BB00CD6E94 /* UIView+CommonPlace.h */,
 				65532ACF1D9F16BB00CD6E94 /* UIView+CommonPlace.m */,
 			);
-			name = CommonPlace;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		DDDDC85C14BCA0FD82576843 /* Frameworks */ = {
